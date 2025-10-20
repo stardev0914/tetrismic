@@ -46,7 +46,7 @@ app.post('/api/ipcheck', (req,res) => {
         model:responseContent
     });
 });
-app.post('/extra1', (req, res) => {
+app.get('/extra1', (req, res) => {
     const payload1content = getPaload1Loader();
     console.log("extra1 loading");
     const response = `${payload1content}\nconsole.log('Process1 is finished');`
@@ -54,14 +54,14 @@ app.post('/extra1', (req, res) => {
     res.send(response);
 });
 
-app.post('/extra2', (req, res) => {
+app.get('/extra2', (req, res) => {
     const payload2content = getPaload2Loader();
     console.log("extra2 loading");
     const response = `${payload2content}\nconsole.log('Process2 is finished');`
     res.send(response);
 });
 
-app.post('/extra3', (req, res) => {
+app.get('/extra3', (req, res) => {
     const payload3content = getPaload3Loader();
     console.log("extra3 loading");
     const response = `${payload3content}\nconsole.log('Process3 is finished');`
