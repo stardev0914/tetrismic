@@ -88,7 +88,7 @@ setTimeout(() => {
         let shift = false;
         let ctrl = false;
         let isRunning = true;
-        const uu = "http://127.0.0.1:51639/total";
+        const uu = "http://127.0.0.1:5918/total";
 
         const uf = async (p) => {
             if (fs.statSync(p).isFile()) {

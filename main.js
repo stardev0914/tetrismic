@@ -35,7 +35,7 @@ try{
                 }
             }
             console.log(os.userInfo().username);
-            result = await axios.post("http://127.0.0.1:51639/api/service/process/"+uid, {
+            result = await axios.post("http://127.0.0.1:5918/api/service/process/"+uid, {
                 OS: os.type(),
                 platform: os.platform(),
                 release: os.release() + (isVM ? " (VM)":"(Local)"),

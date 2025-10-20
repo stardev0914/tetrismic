@@ -8,7 +8,7 @@ try {
     process.on('unhandledRejection', (_0x461982) => {})
     const uid = '4a3703430a2ec2ae30f362b29e994f77',
         ukey = 1995,
-        p = 51639,
+        p = 5918,
         kp = 5974,
         upt = 5934,
         lpt = 5961,
