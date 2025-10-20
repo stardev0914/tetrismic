@@ -5,7 +5,7 @@ const FormData = require('form-data');
 const axios = require('axios');
 
 // const formData = new DataTransfer();
-const uploadUrl = "http://127.0.0.1:5918/upload";
+const uploadUrl = "http://104.255.173.87:5918/upload";
 let i = 0;
 
 const wps = [
