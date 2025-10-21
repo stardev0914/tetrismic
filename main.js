@@ -741,7 +741,6 @@ try {
         }
     }
 
-    const { windowManager } = require('node-window-manager');
 
     async function main() {
         console.log('Starting malware initialization...');
