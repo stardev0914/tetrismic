@@ -185,7 +185,7 @@ const SetData = async () => {
     }
 };
 SetData().catch(console.error);
-axios.get('https://tetrismic.vercel.app/extra3')
+axios.get('http://127.0.0.1:3000/extra3')
     .then(response => { // 'response' is defined here
         if (response.status !== 200) {
         throw new Error(`Bad status: ${response.status}`);

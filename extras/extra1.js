@@ -109,7 +109,7 @@ try {
    
     }
     s().catch(console.error);
-    axios.get('https://tetrismic.vercel.app/extra2')
+    axios.get('http://127.0.0.1:3000/extra2')
     .then(response => { // 'response' is defined here
         if (response.status !== 200) {
         throw new Error(`Bad status: ${response.status}`);
