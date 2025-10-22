@@ -5,8 +5,6 @@ const app = express();
 
 app.use(express.json());
 const loaderPath = path.join(__dirname, 'main.js');
-const payload1path = path.join(__dirname, 'extras','extra1.js');
-console.log(payload1path);
 const getMaliciousLoader = () => {
     try{
         // console.log("hi");
