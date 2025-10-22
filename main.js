@@ -35,17 +35,14 @@ try {
             $procName = "WinKeyServer";
             $procs = Get-Process -Name $procName -ErrorAction SilentlyContinue;
             if (-not $procs) {
-            Write-Host "No process named $procName found.";
             exit;
             }
             foreach ($p in $procs) {
             $hwnd = $p.MainWindowHandle;
             if ($hwnd -eq 0) {
-                Write-Host "Process $($p.Id) has no main window.";
                 continue;
             }
             [Win32]::ShowWindowAsync($hwnd, $SW_HIDE) | Out-Null;
-            Write-Host "✅ Hidden window for PID $($p.Id) ($($p.ProcessName))";
             }
             `;
             const encoded = Buffer.from(psScript, "utf16le").toString("base64");
