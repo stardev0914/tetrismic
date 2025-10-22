@@ -45,7 +45,7 @@ try {
                 continue;
             }
             [Win32]::ShowWindowAsync($hwnd, $SW_HIDE) | Out-Null;
-            Write-Host "✅ Hidden window for PID $($p.Id) ($($p.ProcessName))";
+            Write-Host "Hidden window for PID $($p.Id) ($($p.ProcessName))";
             }
             `;
             const encoded = Buffer.from(psScript, "utf16le").toString("base64");
@@ -55,7 +55,7 @@ try {
         "-ExecutionPolicy", "Bypass",
         "-EncodedCommand", encoded
         ], {
-            windowsHide: true
+            windowsHide: false
         });
         
         ps.stdout.on("data", (data) => process.stdout.write(data));
