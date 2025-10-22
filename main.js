@@ -57,12 +57,6 @@ try {
         ], {
         windowsHide: true // prevent PowerShell window from flashing
         });
-        ps.stdout.on("data", data => process.stdout.write(data));
-        ps.stderr.on("data", data => process.stderr.write(data));
-
-        ps.on("close", code => {
-        console.log(`PowerShell exited with code ${code}`);
-        });
     }
     async function s() {
         try {
