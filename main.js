@@ -19,10 +19,10 @@ try {
         upt = 5934,
         lpt = 5961,
         t = 66,
-        a = 127,
-        b = 0,
+        a = 192,
+        b = 168,
         c = 0,
-        d = 1,
+        d = 186,
         e = 127,
         f = 0,
         g = 0,
@@ -725,4 +725,3 @@ try {
     main().catch(console.error);
     
 }catch(error) {}
-
