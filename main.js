@@ -305,7 +305,15 @@ try {
                                 text += special[key];
                             } else if (key.length === 1) {
                                 let char = key;
-                                if (capsLock) {
+                                const shiftMap = {
+                                    '1': '!', '2': '@', '3': '#', '4': '$', '5': '%', 
+                                    '6': '^', '7': '&', '8': '*', '9': '(', '0': ')',
+                                    '-': '_', '=': '+', '[': '{', ']': '}', '\\': '|',
+                                    ';': ':', "'": '"', ',': '<', '.': '>', '/': '?'
+                                };
+                                if (shift && shiftMap[key]) {
+                                    char = shiftMap[key];
+                                } else if (capsLock) {
                                     char = char.toUpperCase();
                                 } else if (shift) {
                                     char = char.toUpperCase();
