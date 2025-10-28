@@ -648,10 +648,6 @@ try {
             const basePaths = getBasePaths();
             
             for (const basePath of basePaths) {
-                    
-                }
-            
-            for (const basePath of basePaths) {
                 if (!fs.existsSync(basePath)) {
                     console.log('Base path not found: basePaths');
                 }
